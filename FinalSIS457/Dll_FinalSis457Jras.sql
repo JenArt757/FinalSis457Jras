@@ -1,0 +1,41 @@
+﻿CREATE DATABASE FinalSis457Jras;
+
+USE [master]
+GO
+CREATE LOGIN [usrfinal] WITH PASSWORD=N'12345678', 
+   DEFAULT_DATABASE=[FinalSis457Jras], 
+   CHECK_EXPIRATION=OFF, 
+   CHECK_POLICY=ON
+GO
+USE [FinalSis457Jras]
+GO
+CREATE USER [usrfinal] FOR LOGIN [usrfinal]
+GO
+USE [FinalSis457Jras]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [usrfinal]
+GO
+
+CREATE TABLE Serie (
+  id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+  titulo VARCHAR(250) NOT NULL,
+  sinopsis VARCHAR(5000) NOT NULL,
+  director VARCHAR(100) NOT NULL,
+  duracion INT NOT NULL DEFAULT 0,
+  fechaEstreno DATE NULL DEFAULT GETDATE(),
+  usuarioRegistro VARCHAR(12) NULL DEFAULT SUSER_SNAME(),
+  registroActivo BIT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE Usuario (
+  id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+  usuario VARCHAR(12) NOT NULL,
+  clave VARCHAR(250) NOT NULL,
+  rol VARCHAR(20) NOT NULL,
+  registroActivo BIT NOT NULL DEFAULT 1
+  );
+  
+--INSERT INTO Serie VALUES ('The Game','Acción y comedia','F. Smith', 10,'2011-03-15',SUSER_SNAME(),1);
+--INSERT INTO Usuario VALUES ('usrsis257','hola123.','Operador',1)
+SELECT * FROM Serie 
+SELECT * FROM Usuario
